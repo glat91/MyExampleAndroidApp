@@ -35,7 +35,7 @@ fun DialogImageCmp(
     Surface(
         modifier = Modifier
             .fillMaxWidth(1f),
-        color = Color.Transparent // dialog background
+        color = Color.Transparent
     ) {
         Box(
             modifier = Modifier

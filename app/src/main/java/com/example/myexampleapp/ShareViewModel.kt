@@ -2,8 +2,10 @@ package com.example.myexampleapp
 
 import androidx.lifecycle.ViewModel
 import com.example.myexampleapp.models.shareviewmodel.ListSharedModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+@HiltViewModel
 class ShareViewModel @Inject constructor(): ViewModel() {
     var listSharedViewModel: ListSharedModel = ListSharedModel()
 

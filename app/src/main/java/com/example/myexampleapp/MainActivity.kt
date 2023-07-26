@@ -1,8 +1,11 @@
 package com.example.myexampleapp
 
+import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -11,42 +14,35 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.fragment.app.FragmentActivity
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.myexampleapp.models.menu.MenuModel
 import com.example.myexampleapp.models.menu.MenuOpcModel
+import com.example.myexampleapp.navigation.NavigationGraph
+import com.example.myexampleapp.ui.screens.biometrics.view.BiometricsView
 import com.example.myexampleapp.ui.screens.menu.view.MenuView
 import com.example.myexampleapp.ui.theme.MyExampleAppTheme
 import com.example.myexampleapp.utils.customEnums
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : ComponentActivity() {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
+    @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         setContent {
+            //val a = LocalContext.current as FragmentActivity
             MyExampleAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    val menu = MenuOpcModel()
-                    menu.listMenuOpc.add(MenuModel("Biometricos", R.drawable.fingerprint, customEnums.MenuChoosenEnum.Biometrics))
-                    menu.listMenuOpc.add(MenuModel("Camara", R.drawable.camera, customEnums.MenuChoosenEnum.Camara))
-                    menu.listMenuOpc.add(MenuModel("Lista", R.drawable.list, customEnums.MenuChoosenEnum.List))
-                    menu.listMenuOpc.add(MenuModel("Mapas", R.drawable.gmaps, customEnums.MenuChoosenEnum.Maps))
-                    menu.listMenuOpc.add(MenuModel("Bluetooth", R.drawable.bluetooth, customEnums.MenuChoosenEnum.BT))
-                    menu.listMenuOpc.add(MenuModel("Notificacion", R.drawable.notification, customEnums.MenuChoosenEnum.Notification))
-                    val text = remember { mutableStateOf(TextFieldValue("")) }
+                val navHostController = rememberAnimatedNavController()
+                NavigationGraph(navHostController)
 
-                    MenuView(
-                        menuOpc = remember { mutableStateOf(menu) },
-                        searchText = text,
-                        onClickInfo = {},
-                        onClickMenu = {
 
-                        }
-                    )
-                }
             }
         }
     }

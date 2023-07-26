@@ -1,6 +1,5 @@
 package com.example.myexampleapp.ui.screens.menu.view
 
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -27,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import com.example.myexampleapp.R
 import com.example.myexampleapp.models.menu.MenuModel
 import com.example.myexampleapp.models.menu.MenuOpcModel
-import com.example.myexampleapp.ui.screens.components.DialogImageCmp
 import com.example.myexampleapp.ui.screens.components.PrincipalScreenCmp
 import com.example.myexampleapp.ui.screens.components.TopBarCmp
 import com.example.myexampleapp.ui.screens.menu.component.MenuCardCmp
@@ -64,7 +62,7 @@ fun MenuView(
         modifier = Modifier.background(brush),
         topBar = {
                  TopBarCmp(
-                     onClick = { onClickInfo() },
+                     onClickBack = { onClickInfo() },
                      textSearch = searchText
                  )
         },
@@ -118,7 +116,7 @@ fun MenuView(
 @Composable
 fun MenuViewPreview(){
     val menu = MenuOpcModel()
-    menu.listMenuOpc.add(MenuModel("Biometricos", R.drawable.fingerprint, Biometrics))
+    menu.listMenuOpc.add(MenuModel("Biometricos", R.drawable.biometrics, Biometrics))
     menu.listMenuOpc.add(MenuModel("Camara", R.drawable.camera, Camara))
     menu.listMenuOpc.add(MenuModel("Lista", R.drawable.list, List))
     menu.listMenuOpc.add(MenuModel("Mapas", R.drawable.gmaps, Maps))
