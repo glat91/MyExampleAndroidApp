@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
-import androidx.preference.PreferenceManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.security.InvalidKeyException
@@ -23,7 +22,6 @@ import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.inject.Inject
 
-/*
 @HiltViewModel
 class BiometricsViewModel @Inject constructor(
     @ApplicationContext val cnx: Context
@@ -149,8 +147,8 @@ class BiometricsViewModel @Inject constructor(
             cipher.init(Cipher.ENCRYPT_MODE, secretKey)
         }
         catch (e: KeyPermanentlyInvalidatedException) {
-            val prefs = PreferenceManager.getDefaultSharedPreferences(cnx)
-            prefs.edit().putBoolean("RELOAD_BIOMETIC", false).apply()
+            //val prefs = PreferenceManager.getDefaultSharedPreferences(cnx)
+            //prefs.edit().putBoolean("RELOAD_BIOMETIC", false).apply()
             generateSecretKey(
                 KeyGenParameterSpec.Builder("SECRETKEY_BIOMETRICS", KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
                     .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
@@ -203,5 +201,3 @@ class BiometricsViewModel @Inject constructor(
                     + KeyProperties.ENCRYPTION_PADDING_PKCS7)
     }
 }
-
- */
