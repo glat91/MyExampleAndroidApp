@@ -6,7 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -25,10 +24,10 @@ import com.example.myexampleapp.ui.theme.TopBar
 
 @Composable
 fun TopBarCmp(
-    textSearch: MutableState<TextFieldValue>,
+    textSearch: MutableState<TextFieldValue>?,
     flagSearch: MutableState<Boolean> = mutableStateOf(false),
     flagBack: MutableState<Boolean> = mutableStateOf(false),
-    onClick: () -> Unit,
+    onClickBack: () -> Unit,
     content: @Composable () -> Unit = {  }
 ) {
 
@@ -47,12 +46,12 @@ fun TopBarCmp(
                     end.linkTo(parent.end, margin = 4.dp)
                     //bottom.linkTo(txtTitle.bottom, goneMargin = 10.dp)
                 }
-                .clickable { onClick() },
+                .clickable { onClickBack() },
             painter = painterResource(id = R.drawable.info),
             contentDescription = "menu icon"
         )
 
-        if (!flagBack.value){
+        if (flagBack.value){
             Image(
                 modifier = Modifier
                     .size(50.dp)
@@ -61,12 +60,12 @@ fun TopBarCmp(
                         start.linkTo(parent.start, margin = 4.dp)
                         //bottom.linkTo(txtTitle.bottom, goneMargin = 10.dp)
                     }
-                    .clickable { onClick() },
+                    .clickable { onClickBack() },
                 painter = painterResource(id = R.drawable.arrow_back),
                 contentDescription = "arrow back image"
             )
         }
-        if (!flagSearch.value){
+        if (flagSearch.value){
             Column(
                 modifier = Modifier.constrainAs(searchBar) {
                     top.linkTo(ivPhoto.bottom, margin = 8.dp)
@@ -78,7 +77,7 @@ fun TopBarCmp(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 SearchBarCmp(
-                    state = textSearch)
+                    state = textSearch!!)
             }
 
         }
@@ -92,7 +91,7 @@ fun TopBarCmp(
 fun TopBarCmpPreview(){
     val text = remember { mutableStateOf(TextFieldValue("")) }
     TopBarCmp(
-        onClick = {},
+        onClickBack = {},
         textSearch = text
     )
 }
