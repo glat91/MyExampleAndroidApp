@@ -18,7 +18,9 @@ import com.example.myexampleapp.models.menu.MenuOpcModel
 import com.example.myexampleapp.ui.screens.menu.view.MenuView
 import com.example.myexampleapp.ui.theme.MyExampleAppTheme
 import com.example.myexampleapp.utils.customEnums
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
