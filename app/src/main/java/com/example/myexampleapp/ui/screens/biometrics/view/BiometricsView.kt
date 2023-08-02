@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,9 +37,8 @@ fun BiometricsView(
     flagBack: MutableState<Boolean>,
     isBiometricActivate: MutableState<Boolean>,
     onClickBiometric: () -> Unit,
-    fragment: FragmentActivity,
+    //fragment: FragmentActivity,
 ) {
-
 
     Scaffold(
         topBar = {
@@ -61,7 +61,7 @@ fun BiometricsView(
                         Button(
                             modifier = Modifier
                                 .height(50.dp),
-                            onClick = { /*TODO*/ },
+                            onClick = { onClickBiometric() },
                             colors = ButtonDefaults.buttonColors(MenuOpcionBorderColor)
                         ) {
                             TextCmp(
@@ -87,5 +87,6 @@ fun BiometricsView(
 fun BiometricsViewPreview(){
     val flagBack = remember { mutableStateOf(true) }
     val flagBiometric = remember { mutableStateOf(false) }
+
 
 }

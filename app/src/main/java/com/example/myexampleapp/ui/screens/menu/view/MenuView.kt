@@ -40,6 +40,7 @@ import com.example.myexampleapp.utils.customEnums.MenuChoosenEnum.*
 fun MenuView(
     menuOpc: MutableState<MenuOpcModel>,
     searchText: MutableState<TextFieldValue>,
+    flagSearch: MutableState<Boolean>,
     onClickInfo: () -> Unit,
     onClickMenu: (customEnums.MenuChoosenEnum) -> Unit
 ) {
@@ -63,7 +64,8 @@ fun MenuView(
         topBar = {
                  TopBarCmp(
                      onClickBack = { onClickInfo() },
-                     textSearch = searchText
+                     textSearch = searchText,
+                     flagSearch = flagSearch
                  )
         },
         content = {
@@ -127,6 +129,7 @@ fun MenuViewPreview(){
     MenuView(
         menuOpc = remember { mutableStateOf(menu) },
         searchText = text,
+        flagSearch = remember { mutableStateOf(true) },
         onClickInfo = {},
         onClickMenu = {}
     )

@@ -18,6 +18,7 @@ class MenuViewModel @Inject constructor(
 ): ViewModel() {
     val menu: MutableState<MenuOpcModel> = mutableStateOf(MenuOpcModel())
     val serchText: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue(""))
+    val flagSerch: MutableState<Boolean> = mutableStateOf(true)
 
 
     init {

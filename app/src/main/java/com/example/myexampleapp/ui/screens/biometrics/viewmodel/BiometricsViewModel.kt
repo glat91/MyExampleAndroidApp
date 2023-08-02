@@ -5,9 +5,11 @@ import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.security.keystore.KeyProperties
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
+import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -26,6 +28,11 @@ import javax.inject.Inject
 class BiometricsViewModel @Inject constructor(
     @ApplicationContext val cnx: Context
 ) : ViewModel() {
+    private val flagBack = mutableStateOf(true)
+    fun getFlagBack() = flagBack
+    private val isBiometricActive =mutableStateOf(false)
+    fun getBiometricFlag() = isBiometricActive
+
 
     private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
@@ -60,6 +67,7 @@ class BiometricsViewModel @Inject constructor(
                 //val user = UniqueID.getInstance(requireContext()).getUser()
                 //val deviceId = UniqueID.getInstance(requireContext()).getAppID()
                 //presenter?.sendSuccesEmail(user, deviceId, true)
+                Log.i("Biometrics____", "success")
             }
         })
 
@@ -81,40 +89,56 @@ class BiometricsViewModel @Inject constructor(
         */
     }
 
-    fun checkBiometrics(fragment: Fragment){
+    fun checkBiometrics(fragment: FragmentActivity){
         lateinit var executor: Executor
         lateinit var biometricPrompt: BiometricPrompt
         lateinit var promptInfo: BiometricPrompt.PromptInfo
-
+        val biometricManager = BiometricManager.from(cnx)
+        //configBiometric(fragment)
         executor = ContextCompat.getMainExecutor(cnx)
         biometricPrompt = BiometricPrompt(fragment, executor, object : BiometricPrompt.AuthenticationCallback(){
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)
                 when(errorCode){
-                    BiometricPrompt.ERROR_LOCKOUT, BiometricPrompt.ERROR_LOCKOUT_PERMANENT ->{
+                    BiometricPrompt.ERROR_LOCKOUT->{
                         //createAlert(updateLanguageByItemFragment(R.string.str_alert_biometric_error_many_attempts))
                     }
-                    BiometricPrompt.ERROR_NO_BIOMETRICS, BiometricPrompt.ERROR_NO_DEVICE_CREDENTIAL->{
+                    BiometricPrompt.ERROR_LOCKOUT_PERMANENT->{
+                        //createAlert(updateLanguageByItemFragment(R.string.str_alert_biometric_error_many_attempts))
+                    }
+                    BiometricPrompt.ERROR_NO_BIOMETRICS->{
                         //createAlert(updateLanguageByItemFragment(R.string.str_alert_biometric_error_none_enrolled))
                     }
+                    BiometricPrompt.ERROR_NO_DEVICE_CREDENTIAL->{
+                        //createAlert(updateLanguageByItemFragment(R.string.str_alert_biometric_error_none_enrolled))
+                    }
+                    BiometricPrompt.ERROR_TIMEOUT->{}
+                    BiometricPrompt.ERROR_USER_CANCELED->{}
+                    BiometricPrompt.ERROR_CANCELED->{}
                     else->{}
                 }
             }
-
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
-                //val appID = UniqueID.getInstance(requireActivity()).getAppID()
-                //val strUser = UniqueID.getInstance(requireActivity()).getUser()
-                //loginPresenter?.loginWithBiometris(strUser, appID, requireContext())
+                //val user = UniqueID.getInstance(requireContext()).getUser()
+                //val deviceId = UniqueID.getInstance(requireContext()).getAppID()
+                //presenter?.sendSuccesEmail(user, deviceId, true)
+                Log.i("Biometrics____", "success")
             }
         })
 
         promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("string.str_biometric_fingerprint")
-            .setDescription("R.string.str_biometric_fingerprint_msj)")
-            .setNegativeButtonText("R.string.str_negative_button_biometric")
+            .setTitle("Biometric Authentication")
+            .setDescription("Coloca el tu dedo en el lector de huellas")
+            .setNegativeButtonText("Cancelar")
             .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG)
             .build()
+
+        validateBiometricAction(biometricManager){
+            validateBiometricChange()
+            biometricPrompt.authenticate(promptInfo)
+        }
+
 
         /**
         this.btnLoginBiometricEnable.setOnClickListener {
