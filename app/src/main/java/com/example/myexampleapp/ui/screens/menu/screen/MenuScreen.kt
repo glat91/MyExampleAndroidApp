@@ -30,7 +30,7 @@ fun MenuScreen(
                 customEnums.MenuChoosenEnum.Biometrics -> navHostController.navigate(route = Destination.Biometric.route)
                 customEnums.MenuChoosenEnum.Camara -> navHostController.navigate(route = Destination.Camera.route)
                 customEnums.MenuChoosenEnum.List -> TODO()
-                customEnums.MenuChoosenEnum.Maps -> TODO()
+                customEnums.MenuChoosenEnum.Maps -> navHostController.navigate(route = Destination.GMaps.route)
                 customEnums.MenuChoosenEnum.BT -> TODO()
                 customEnums.MenuChoosenEnum.Notification -> TODO()
             }

@@ -9,4 +9,5 @@ sealed class Destination(
     object List: Destination("list")
     object BT: Destination("bluetooth")
     object Notification: Destination("notification")
+    object GMaps: Destination("gmaps")
 }

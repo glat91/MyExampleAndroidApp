@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.example.myexampleapp.ui.screens.biometrics.screen.BiometricsScreen
 import com.example.myexampleapp.ui.screens.camera.screen.CameraScreen
+import com.example.myexampleapp.ui.screens.maps.screen.GMapsScreen
 import com.example.myexampleapp.ui.screens.menu.screen.MenuScreen
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -25,6 +26,7 @@ fun Navigation(navHostController: NavHostController) {
         cameraScreen(navHostController = navHostController)
         listScreen(navHostController = navHostController)
         notificationScreen(navHostController = navHostController)
+        gmapsScreen(navHostController = navHostController)
     }
 }
 @ExperimentalAnimationApi
@@ -113,6 +115,22 @@ fun NavGraphBuilder.notificationScreen(navHostController: NavHostController) {
         popExitTransition = { Animations.customPopExitAnimation }
     ){
         MenuScreen(
+            navHostController = navHostController
+        )
+    }
+}
+
+@ExperimentalAnimationApi
+@ExperimentalPagerApi
+fun NavGraphBuilder.gmapsScreen(navHostController: NavHostController) {
+    composable(
+        route = Destination.GMaps.route,
+        enterTransition = { Animations.customEnterAnimation },
+        exitTransition = { Animations.customExitAnimation },
+        popEnterTransition = { Animations.customPopEnterAnimation },
+        popExitTransition = { Animations.customPopExitAnimation }
+    ){
+        GMapsScreen(
             navHostController = navHostController
         )
     }
